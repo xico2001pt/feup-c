@@ -1,0 +1,96 @@
+class RegAlloc {
+    /*
+    public int soManyRegisters(int arg){
+       int a;
+       int b;
+       int c;
+       int d;
+       a = 0;
+       b = a;
+       c = b;
+       d = c;
+       return d;
+    }*/
+
+    public int foo(){
+        int a;
+        int b;
+        int c;
+        
+        a = 5;
+        
+        c = 0;
+        while(c < 5){
+            c = c + 1;
+        }
+
+        if(a < 4){
+            c = a + 2;
+            b = 8;
+        } else {
+            a = 12;
+            b = a;
+            c = 15;
+        }
+        return a + b + c;
+    }
+
+    /*
+    LivenessAnalyser: 
+    1 - use:{} def:{a, } in:{} out:{a, }                        // a = 5
+    2 - use:{a, } def:{} in:{a, } out:{a, }                     // a < 4
+
+    3 - use:{a, } def:{c, } in:{a, } out:{a, c, }               // c = a + 2
+    4 - use:{} def:{b, } in:{a, c, } out:{a, b, c, }            // b = 8
+    5 - use:{} def:{} in:{a, b, c, } out:{a, b, c, }            // GOTO
+    
+    6 - use:{} def:{a, } in:{} out:{a, }                        // a = 12
+    7 - use:{a, } def:{b, } in:{a, } out:{a, b, }               // b = a
+    8 - use:{} def:{c, } in:{a, b, } out:{a, b, c, }            // c = 15
+    
+    9 - use:{a, b, } def:{t0, } in:{a, b, c, } out:{c, t0, }    // t0 = a + b
+    10 - use:{c, t0, } def:{t1, } in:{c, t0, } out:{t1, }       // t1 = t0 + c
+    11 - use:{t1, } def:{} in:{t1, } out:{}                     // return t1
+
+    a1: 1-2-3-4-5-9
+    a2: 6-7-8-9
+    c1: 3-4-5-9-10
+    c2: 8-9-10
+    b1: 4-5-9
+    b2: 7-8-9
+    t0-1: 9-10
+    t1-1: 10-11
+
+    a1: 1-2-3-4-5-6-7-8-9
+    c1: 3-4-5-9-10
+    */
+
+    /*
+    LivenessAnalyser: 
+    1 - use:{} def:{a, } in:{} out:{a, }
+
+    2 - use:{} def:{c, } in:{a, } out:{a, c, }          // c = 0
+    3 - use:{c, } def:{} in:{a, c, } out:{a, c, }       // c < 5
+    4 - use:{c, } def:{c, } in:{a, c, } out:{a, c, }    // c = c + 1
+    5 - use:{} def:{} in:{a, c, } out:{a, c, }          // GOTO
+
+    6 - use:{a, } def:{} in:{a, } out:{a, }
+
+    7 - use:{a, } def:{c, } in:{a, } out:{a, c, }
+    8 - use:{} def:{b, } in:{a, c, } out:{a, b, c, }
+    9 - use:{} def:{} in:{a, b, c, } out:{a, b, c, }
+
+    10 - use:{} def:{a, } in:{} out:{a, }
+    11 - use:{a, } def:{b, } in:{a, } out:{a, b, }
+    12 - use:{} def:{c, } in:{a, b, } out:{a, b, c, }
+
+    13 - use:{a, b, } def:{t0, } in:{a, b, c, } out:{c, t0, }
+    14 - use:{c, t0, } def:{t1, } in:{c, t0, } out:{t1, }
+    15 - use:{t1, } def:{} in:{t1, } out:{}
+
+    c1: 2-3-4-5-3
+    */
+
+	public static void main(String[] args) {
+	} 
+}

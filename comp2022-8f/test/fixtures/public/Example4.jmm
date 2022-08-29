@@ -1,0 +1,19 @@
+// This example should fail with semantic error
+
+import ioPlus;
+
+class Example4 {
+	public static void main(String[] args) {
+	    int a;
+        int b;
+        Example4 example;
+        example = new Example4();
+        example.foo(a,b);
+	}
+
+    public int foo(int a, int b, int c){
+        int d;
+        d = a + b + c;
+        return d;
+    }
+}
